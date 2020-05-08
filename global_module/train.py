@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import sys
 sys.path.append('../global_module/')
-import d2lzh_pytorch as d2l
+
 
 
 def evaluate_accuracy(data_iter, net, loss, device):
