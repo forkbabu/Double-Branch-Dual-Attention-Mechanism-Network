@@ -104,6 +104,17 @@ def load_dataset(Dataset):
         VALIDATION_SPLIT = split
         TRAIN_SIZE = math.ceil(TOTAL_SIZE * VALIDATION_SPLIT)
     
+    if Dataset == 'UH':
+        UH = sio.loadmat('../datasets/houston.mat')
+        gt_UH = sio.loadmat('../datasets/houston.mat')
+        data_hsi = UH['img']
+        gt_hsi_tr = gt_UH['houston_gt_tr']
+        gt_hsi_te = gt_UH['houston_gt_te']
+        data_hsi = houston_transform(data_hsi,BANDLIST)
+        
+        
+    
+    
     return data_hsi, gt_hsi, TOTAL_SIZE, TRAIN_SIZE, VALIDATION_SPLIT,filename
 
 def save_cmap(img, cmap, fname):
