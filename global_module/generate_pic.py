@@ -41,7 +41,7 @@ def load_dataset(Dataset):
         data_hsi = houston_transform(data_hsi,BANDLIST)
         TRAIN_SIZE = 2832
         TOTAL_SIZE = TRAIN_SIZE + 12197
-            
+        
     return data_hsi, gt_hsi_tr,gt_hsi_te, TOTAL_SIZE, TRAIN_SIZE,filename
 
 def save_cmap(img, cmap, fname):
