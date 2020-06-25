@@ -90,7 +90,7 @@ for index_iter in range(ITER):
 
     print('-----Selecting Small Pieces from the Original Cube Data-----')
 
-    train_iter, valida_iter, test_iter, all_iter = generate_iter(TRAIN_SIZE, train_indices, TEST_SIZE, test_indices, TOTAL_SIZE, total_indices, VAL_SIZE,
+    train_iter, valida_iter, test_iter = generate_iter(TRAIN_SIZE, train_indices, TEST_SIZE, test_indices, TOTAL_SIZE, total_indices, VAL_SIZE,
                   whole_data, PATCH_LENGTH, padded_data, INPUT_DIMENSION, batch_size, gt_tr,gt_te)
 
     tic1 = time.clock()
@@ -132,7 +132,7 @@ location = 'records/' + method + '_' + Dataset + '_' +str(BAND)+ '.txt'
 
 
 
-generate_png(all_iter, net, gt_hsi_tr, Dataset, device, total_indices)
+generate_png(test_iter, net, gt_hsi_tr, Dataset, device, total_indices)
 print("location=\"",end="")
 print("./records/"+ method + '_' + Dataset + '_' +str(BAND)+ '.txt',end="")
 print("\"")
