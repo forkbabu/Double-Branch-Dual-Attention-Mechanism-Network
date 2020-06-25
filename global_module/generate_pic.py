@@ -19,7 +19,6 @@ with open(filename, 'r') as f:
 def houston_transform(ARRAY,BANDLIST):
     if BANDLIST is not None:
         BANDLIST=BANDLIST[:25]
-        BANDLIST = BANDLIST[:nbands]
         assert ARRAY.shape[2] ==144
         tensor_list = []
         for i in range(0,len(BANDLIST)):
