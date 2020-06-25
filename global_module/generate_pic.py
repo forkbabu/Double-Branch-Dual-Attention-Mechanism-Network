@@ -12,7 +12,7 @@ import ast
 import os
 mydir = "/content/Double-Branch-Dual-Attention-Mechanism-Network/SSRN/"
 for file in os.listdir(mydir):
-    if file.endswith("houston.txt"):
+    if file.endswith(".txt"):
         pass
 
 
