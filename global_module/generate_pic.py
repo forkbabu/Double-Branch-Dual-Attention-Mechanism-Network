@@ -30,7 +30,7 @@ def load_dataset(Dataset):
     
     if Dataset == 'UH':
         UH = sio.loadmat('../datasets/houston.mat')
-        gt_UH = sio.loadmat('../datasets/houston_gt.mat')
+        gt_UH = sio.loadmat('../datasets/houston_gt.mat?raw=true')
         data_hsi = UH['img']
         gt_hsi_tr = gt_UH['houston_gt_tr']
         gt_hsi_te = gt_UH['houston_gt_te']
