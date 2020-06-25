@@ -11,12 +11,8 @@ import torch.utils.data as Data
 import ast
 import os
 mydir = "/content/Double-Branch-Dual-Attention-Mechanism-Network/SSRN/"
-for file in os.listdir(mydir):
-    if file.endswith(".txt"):
-        pass
 
-
-filename = input("Enter filename ")
+filename = 'dabs_houston.txt'
 with open(filename, 'r') as f:
     BANDLIST = ast.literal_eval(f.read())
     
