@@ -78,6 +78,8 @@ for index_iter in range(ITER):
     np.random.seed(seeds[index_iter])
     _, train_indices = sampling(1, gt_tr)
     _, test_indices = sampling(1, gt_te)
+    
+    total_indices = train_indices
 
     TRAIN_SIZE = len(train_indices)
     print('Train size: ', TRAIN_SIZE)
