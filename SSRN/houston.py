@@ -31,20 +31,20 @@ print('-----Importing Dataset-----')
 global Dataset  # UP,IN,KSC
 dataset = 'IN'
 Dataset = dataset.upper()
-data_hsi, gt_hsi, TOTAL_SIZE, TRAIN_SIZE,VALIDATION_SPLIT,method = load_dataset(Dataset)
+data_hsi, gt_hsi_tr,gt_hsi_te, TOTAL_SIZE, TRAIN_SIZE,method = load_dataset(Dataset)
 
 print(data_hsi.shape)
 image_x, image_y, BAND = data_hsi.shape
 data = data_hsi.reshape(np.prod(data_hsi.shape[:2]), np.prod(data_hsi.shape[2:]))
-gt = gt_hsi.reshape(np.prod(gt_hsi.shape[:2]),)
+gt_tr = gt_hsi_tr.reshape(np.prod(gt_hsi_tr.shape[:2]),)     
+gt_te = gt_hsi_te.reshape(np.prod(gt_hsi_te.shape[:2]),)     
 CLASSES_NUM = max(gt)
 print('The class numbers of the HSI data is:', CLASSES_NUM)
 
 print('-----Importing Setting Parameters-----')
 ITER = int(input("Enter num of iterations "))
 PATCH_LENGTH = 3
-# number of training samples per class
-#lr, num_epochs, batch_size = 0.0001, 200, 32
+
 lr, num_epochs, batch_size = 0.0005, 200, 16
 loss = torch.nn.CrossEntropyLoss()
 
@@ -67,9 +67,7 @@ ELEMENT_ACC = np.zeros((ITER, CLASSES_NUM))
 data = preprocessing.scale(data)
 data_ = data.reshape(data_hsi.shape[0], data_hsi.shape[1], data_hsi.shape[2])
 whole_data = data_
-padded_data = np.lib.pad(whole_data, ((PATCH_LENGTH, PATCH_LENGTH), (PATCH_LENGTH, PATCH_LENGTH), (0, 0)),
-
-                         'constant', constant_values=0)
+padded_data = np.lib.pad(whole_data, ((PATCH_LENGTH, PATCH_LENGTH), (PATCH_LENGTH, PATCH_LENGTH), (0, 0)),'constant', constant_values=0)
 net = network.SSRN_network(BAND, CLASSES_NUM).to(device)
 summary(net,input_size=(1,img_rows,img_cols,BAND))
 for index_iter in range(ITER):
@@ -78,8 +76,8 @@ for index_iter in range(ITER):
     optimizer = optim.Adam(net.parameters(), lr=lr)  # , weight_decay=0.0001)
     time_1 = int(time.time())
     np.random.seed(seeds[index_iter])
-    train_indices, test_indices = sampling(VALIDATION_SPLIT, gt)
-    _, total_indices = sampling(1, gt)
+    _, train_indices = sampling(1, gt_tr)
+    _, test_indices = sampling(1, gt_te)
 
     TRAIN_SIZE = len(train_indices)
     print('Train size: ', TRAIN_SIZE)
@@ -108,7 +106,7 @@ for index_iter in range(ITER):
             pred_test_fdssc.extend(np.array(net(X).cpu().argmax(axis=1)))
     toc2 = time.clock()
     collections.Counter(pred_test_fdssc)
-    gt_test = gt[test_indices] - 1
+    gt_test = gt_te[test_indices] - 1
 
 
     overall_acc_fdssc = metrics.accuracy_score(pred_test_fdssc, gt_test[:-VAL_SIZE])
@@ -127,12 +125,12 @@ for index_iter in range(ITER):
 
 print("--------" + net.name + " Training Finished-----------")
 record.record_output(OA, AA, KAPPA, ELEMENT_ACC, TRAINING_TIME, TESTING_TIME,
-                     'records/' + method + '_' + Dataset + '_' +str(BAND)+ '_'  + str(VALIDATION_SPLIT)  + '.txt')
-location = 'records/' + method + '_' + Dataset + '_' +str(BAND)+ '_'  + str(VALIDATION_SPLIT)  + '.txt'
+                     'records/' + method + '_' + Dataset + '_' +str(BAND)+ '.txt')
+location = 'records/' + method + '_' + Dataset + '_' +str(BAND)+ '.txt'
 
 
 
 generate_png(all_iter, net, gt_hsi, Dataset, device, total_indices)
 print("location=\"",end="")
-print("./records/"+ method + '_' + Dataset + '_' +str(BAND)+ '_'  + str(VALIDATION_SPLIT)  + '.txt',end="")
+print("./records/"+ method + '_' + Dataset + '_' +str(BAND)+ '.txt',end="")
 print("\"")
