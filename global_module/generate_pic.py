@@ -12,7 +12,7 @@ import ast
 import os
 mydir = "/content/Double-Branch-Dual-Attention-Mechanism-Network/SSRN/"
 
-filename = 'dabs_houston.txt'
+filename = 'dabs_pam_houston.txt'
 with open(filename, 'r') as f:
     BANDLIST = ast.literal_eval(f.read())
     
