@@ -38,7 +38,7 @@ image_x, image_y, BAND = data_hsi.shape
 data = data_hsi.reshape(np.prod(data_hsi.shape[:2]), np.prod(data_hsi.shape[2:]))
 gt_tr = gt_hsi_tr.reshape(np.prod(gt_hsi_tr.shape[:2]),)     
 gt_te = gt_hsi_te.reshape(np.prod(gt_hsi_te.shape[:2]),)     
-CLASSES_NUM = max(gt)
+CLASSES_NUM = max(gt_tr)
 print('The class numbers of the HSI data is:', CLASSES_NUM)
 
 print('-----Importing Setting Parameters-----')
@@ -130,7 +130,7 @@ location = 'records/' + method + '_' + Dataset + '_' +str(BAND)+ '.txt'
 
 
 
-generate_png(all_iter, net, gt_hsi, Dataset, device, total_indices)
+generate_png(all_iter, net, gt_hsi_tr, Dataset, device, total_indices)
 print("location=\"",end="")
 print("./records/"+ method + '_' + Dataset + '_' +str(BAND)+ '.txt',end="")
 print("\"")
