@@ -152,11 +152,11 @@ def list_to_colormap(x_list):
 
 
 def generate_iter(TRAIN_SIZE, train_indices, TEST_SIZE, test_indices, TOTAL_SIZE, total_indices, VAL_SIZE,
-                  whole_data, PATCH_LENGTH, padded_data, INPUT_DIMENSION, batch_size, gt):
+                  whole_data, PATCH_LENGTH, padded_data, INPUT_DIMENSION, batch_size, gt_tr,gt_te):
 
-    gt_all = gt[total_indices] - 1
-    y_train = gt[train_indices] - 1
-    y_test = gt[test_indices] - 1
+    gt_all = gt_tr[total_indices] - 1
+    y_train = gt_tr[train_indices] - 1
+    y_test = gt_te[test_indices] - 1
 
     all_data = extract_samll_cubic.select_small_cubic(TOTAL_SIZE, total_indices, whole_data,
                                                       PATCH_LENGTH, padded_data, INPUT_DIMENSION)
