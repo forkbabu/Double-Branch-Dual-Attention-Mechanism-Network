@@ -132,7 +132,7 @@ location = 'records/' + method + '_' + Dataset + '_' +str(BAND)+ '.txt'
 
 
 
-generate_png(test_iter, net, gt_hsi_tr, Dataset, device, total_indices)
+generate_png(test_iter, net, gt_hsi_te, Dataset, device, test_indices)
 print("location=\"",end="")
 print("./records/"+ method + '_' + Dataset + '_' +str(BAND)+ '.txt',end="")
 print("\"")
